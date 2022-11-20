@@ -1,0 +1,16 @@
+---
+- name: Ensure credentials directory exists with correct permissions
+  file:
+    state: directory
+    path: "{{ local_credentials_path }}"
+    recurse: yes
+    mode: u+rwx,og-rwx
+
+- name: Set up each credential type in managed_credential_files list
+  include_tasks: single_token.yml
+  vars:
+    local_credentials_full_path: "{{ (local_credentials_path, local_credential_filename) | path_join }}"
+  loop_control:
+    loop_var: local_credential_filename
+  loop: "{{ managed_credential_files }}"
+

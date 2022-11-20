@@ -1,0 +1,42 @@
+---
+- name: Update git config with user name
+  ansible.builtin.git_config:
+    name: user.name
+    scope: global
+    value: korbad
+  
+- name: Update git config with user email
+  ansible.builtin.git_config:
+    name: user.email
+    scope: global
+    value: korbad@gmail.com
+
+- name: Manage each repo via github org and repo name
+  include_tasks: status.yml
+  loop: "{{ managed_github_repos }}"
+  loop_control:
+    loop_var: github
+  vars:
+    git_url: "{{ github.git_link }}"
+    github_org: "{{ github.github_org }}"
+    github_repo_name: "{{ github.github_repo_name }}"
+    project_path: "{{ (github_repos_basedir, github_org, github_repo_name) | path_join }}"
+
+- name: Get list of repos within an org
+  command:
+    cmd: gh repo list Korbad --json sshUrl,owner,name
+  register: gh_org_repo_list
+
+- name: Manage each repo in github org
+  include_tasks: status.yml
+  loop: "{{ gh_org_repo_list.stdout | from_json }}"
+  loop_control:
+    loop_var: github
+  vars:
+    git_url: "{{ github.sshUrl }}"
+    github_org: "{{ github.owner.login }}"
+    github_repo_name: "{{ github.name }}"
+    project_path: "{{ (github_repos_basedir, github_org, github_repo_name) | path_join }}"
+
+
+

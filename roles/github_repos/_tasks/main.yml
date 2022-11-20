@@ -1,0 +1,28 @@
+---
+- name: Manage each git repo by git url
+  include_tasks: status.yml
+  loop: "{{ managed_github_repos }}"
+  loop_control:
+    loop_var: git_repo
+  vars:
+    # this is a dumb and  brittle method for extracting the github org and repo name from the git url
+    repo_link: "{{ git_repo.repo_link }}"
+    url_path: "{{ repo_link | urlsplit('path') }}"
+    url_path_without_ext: "{{ url_path | splitext | first }}"
+    split_path: "{{ url_path_without_ext | split('/') | list }}"
+    github_org: "{{ split_path[1] }}"
+    github_repo_name: "{{ split_path[2] }}"
+  when: git_repo.repo_link is defined
+
+- name: Manage each repo via github org and repo name
+  include_tasks: status.yml
+  loop: "{{ managed_github_repos }}"
+  loop_control:
+    loop_var: git_repo
+  vars:
+    github_org: "{{ git_repo.github_org }}"
+    github_repo_name: "{{ git_repo.github_repo_name }}"
+
+  when:
+    - git_repo.github_org is defined
+    - git_repo.github_repo_name is defined

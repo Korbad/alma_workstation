@@ -1,0 +1,21 @@
+---
+- name: Credentials file stat {{ local_credentials_full_path }}
+  stat:
+    path: "{{ local_credentials_full_path }}"
+  register: credentials_stat
+
+- name: Create the credential file if it doesn't exist
+  include_tasks: create_credential_file.yml
+  when: not credentials_stat.stat.exists or credentials_stat.stat.size == 0
+
+- name: Assert that the managed credential exists and is not an empty string
+  assert:
+    that:
+      - credentials_stat.stat.size > 0
+    fail_msg: "Credential value not found in credential file {{ local_credentials_full_path }}. If this credential should not be managed by this role, remove it from the 'managed_credential_files' list."
+
+- name: Ensure credential file has the correct permissions
+  ansible.builtin.file:
+    path: "{{ local_credentials_full_path }}"
+    state: file
+    mode: u+rwx,og-rwx

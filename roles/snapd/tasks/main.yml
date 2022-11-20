@@ -1,0 +1,17 @@
+---
+- name: Install snapd package
+  package:
+    name: snapd
+  notify:
+    - start-snapd-socket
+
+- name: Start snapd service
+  service:
+    name: snapd
+    state: started
+    enabled: yes
+
+#- name: Create symlink so applications appear in the Application Menu
+#  command:
+#    cmd: ln -s /var/lib/snapd/desktop/applications/ ~/.local/share/applications/snap
+

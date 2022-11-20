@@ -1,0 +1,9 @@
+---
+- name: Check local git repo for current status (any unpushed commits?)
+  git:
+    clone: no
+    repo: "{{ github_full_git_path }}"
+    dest: "{{ project_path }}"
+    version: "{{ github_version|default(omit,true) }}"
+    update: no
+  register: git_result

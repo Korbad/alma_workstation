@@ -1,0 +1,4 @@
+---
+github_repos_basedir: "{{ lookup('env','HOME')+'/managed_github_repos' }}"
+
+

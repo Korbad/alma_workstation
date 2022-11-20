@@ -1,0 +1,36 @@
+---
+- name: git repo, update {{ github_full_git_path }}
+  git:
+    dest: "{{ project_path }}"
+    repo: "{{ github_full_git_path }}"
+    update: yes
+    version: "{{ github_version|default(omit,true) }}"
+    accept_hostkey: yes
+  register: repo_update_results
+  when: git_status_results.rc == 128
+
+- name: check for git repo, check mode no update
+  git:
+    dest: "{{ project_path }}"
+    repo: "{{ github_full_git_path }}"
+    update: no
+    version: "{{ github_version|default(omit,true) }}"
+  register: repo_no_update_results_checkmode
+  check_mode: yes
+  when: repo_update_results is skipped
+
+- name: pull latest changes for github repo at {{ project_path }}
+  command: git pull
+  args:
+    chdir: "{{ project_path }}"
+  register: git_pull_results
+  when: repo_update_results is skipped
+
+- name: check for git repo, no update
+  git:
+    dest: "{{ project_path }}"
+    repo: "{{ github_full_git_path }}"
+    update: no
+    version: "{{ github_version|default(omit,true) }}"
+  register: repo_no_update_results
+  when: repo_update_results is skipped

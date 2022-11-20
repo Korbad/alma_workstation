@@ -1,0 +1,8 @@
+---
+- name: git repo, update for project_path {{ project_path }}
+  git:
+    dest: "{{ project_path }}"
+    repo: "{{ git_url }}"
+    update: yes
+    accept_hostkey: yes
+

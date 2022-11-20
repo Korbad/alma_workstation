@@ -1,0 +1,10 @@
+---
+- name: Ensure github gh cli package repo is available
+  ansible.builtin.get_url:
+    url: https://cli.github.com/packages/rpm/gh-cli.repo
+    dest: /etc/yum.repos.d/gh-cli.repo
+
+- name: Ensure gh is installed
+  ansible.builtin.package:
+    name: gh
+    state: present

@@ -1,0 +1,5 @@
+---
+- name: Enable ssh forward agent
+  community.general.ssh_config:
+    forward_agent: yes
+

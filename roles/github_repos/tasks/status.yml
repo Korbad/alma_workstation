@@ -1,0 +1,29 @@
+---
+- name: Ensure the directory exists for git repo
+  file:
+    state: directory
+    path: "{{ project_path }}"
+
+- name: If git status fails, check the directory for existing files
+  block:
+  - name: git status
+    command: git status
+    args:
+      chdir: "{{ project_path }}"
+    register: git_status_results
+    changed_when: no
+
+  rescue:
+  - name: Fetch the target directory contents
+    find:
+      paths: "{{ project_path }}"
+      file_type: any
+      hidden: yes
+    register: files_in_project_dir
+
+  - name: The destination directory must be empty for us to clone into it
+    assert:
+      that:
+        files_in_project_dir.matched == 0
+
+- include_tasks: update.yml

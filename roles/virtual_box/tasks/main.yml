@@ -1,0 +1,24 @@
+---
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Display package facts
+  ansible.builtin.debug:
+    var: ansible_facts.packages
+
+- name: Add VirtualBox repo
+  command:
+    cmd: dnf config-manager --add-repo=https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo
+
+- name: Import VirtualBox repo GPG key
+  rpm_key:
+    state: present
+    key: https://www.virtualbox.org/download/oracle_vbox.asc
+
+- name: Install VirtualBox
+  yum:
+    name: VirtualBox-{{ virtualbox_version }}
+    state: present
+  become: yes
+

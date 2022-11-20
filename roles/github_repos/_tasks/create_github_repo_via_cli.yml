@@ -1,0 +1,9 @@
+---
+- name: Create github repo via gh cli
+  command:
+    cmd: "gh repo create {{ github_username }}/{{ github_repo_name }} {{ flags }}"
+    chdir: "{{ project_path }}"
+  vars:
+    flags: "--private"
+  environment:
+    GITHUB_TOKEN: "{{ github_personal_access_token }}"

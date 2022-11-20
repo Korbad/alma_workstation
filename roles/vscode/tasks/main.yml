@@ -1,0 +1,17 @@
+---
+- name: Register VSCode to yum repos (which is used by dnf)
+  ansible.builtin.yum_repository:
+    name: code
+    description: Visual Studio Code repo
+    file: vscode
+    baseurl: '{{ visual_studio_code_mirror }}/yumrepos/vscode'
+    gpgkey: '{{ visual_studio_code_mirror }}/keys/microsoft.asc'
+    gpgcheck: yes
+  vars:
+    visual_studio_code_mirror: https://packages.microsoft.com
+
+
+- name: Install VSCode via dnf
+  ansible.builtin.dnf:
+    name: code
+    state: present

@@ -1,0 +1,17 @@
+---
+- name: Ensure dependencies are installed
+  ansible.builtin.package:
+    name:
+      - dnf-plugins-core
+    state: present
+
+- name: Ensure Hashicorp repo is installed
+  ansible.builtin.get_url:
+    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    dest: /etc/yum.repos.d/hashicorp.repo
+
+- name: Ensure Vagrant is installed
+  ansible.builtin.package:
+    name: vagrant
+    state: present
+

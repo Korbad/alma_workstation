@@ -1,0 +1,15 @@
+---
+- name: Create github repo via Ansible module
+  community.general.github_repo:
+    access_token: "{{ github_personal_access_token }}"
+    name: "{{ github_repo_name }}"
+    organization: "{{ github_repo_org }}"
+
+
+#
+#    cmd: "gh repo create {{ github_username }}/{{ github_repo_name }} {{ flags }}"
+#    chdir: "{{ project_path }}"
+#  vars:
+#    flags: "--private"
+#  environment:
+#    GITHUB_TOKEN: "{{ github_personal_access_token }}"
