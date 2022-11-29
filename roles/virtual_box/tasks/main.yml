@@ -10,11 +10,13 @@
 - name: Add VirtualBox repo
   command:
     cmd: dnf config-manager --add-repo=https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo
+  become: yes
 
 - name: Import VirtualBox repo GPG key
   rpm_key:
     state: present
     key: https://www.virtualbox.org/download/oracle_vbox.asc
+  become: yes
 
 - name: Install VirtualBox
   yum:
@@ -22,3 +24,5 @@
     state: present
   become: yes
 
+- name: Execute vendor-provided configuration script
+  include_tasks: configure.yml

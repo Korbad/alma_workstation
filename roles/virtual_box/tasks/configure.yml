@@ -1,0 +1,4 @@
+---
+- name: Execute virtualbox configuration script
+  command: /sbin/vboxconfig
+  become: yes
