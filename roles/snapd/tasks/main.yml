@@ -4,12 +4,14 @@
     name: snapd
   notify:
     - start-snapd-socket
+  become: yes
 
 - name: Start snapd service
   service:
     name: snapd
     state: started
     enabled: yes
+  become: yes
 
 #- name: Create symlink so applications appear in the Application Menu
 #  command:

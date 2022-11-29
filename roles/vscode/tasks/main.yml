@@ -9,9 +9,10 @@
     gpgcheck: yes
   vars:
     visual_studio_code_mirror: https://packages.microsoft.com
-
+  become: yes
 
 - name: Install VSCode via dnf
   ansible.builtin.dnf:
     name: code
     state: present
+  become: yes

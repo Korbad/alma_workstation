@@ -4,14 +4,17 @@
     name:
       - dnf-plugins-core
     state: present
+  become: yes
 
 - name: Ensure Hashicorp repo is installed
   ansible.builtin.get_url:
     url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
     dest: /etc/yum.repos.d/hashicorp.repo
+  become: yes
 
 - name: Ensure Vagrant is installed
   ansible.builtin.package:
     name: vagrant
     state: present
+  become: yes
 

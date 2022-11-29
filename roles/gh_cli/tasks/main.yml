@@ -3,8 +3,10 @@
   ansible.builtin.get_url:
     url: https://cli.github.com/packages/rpm/gh-cli.repo
     dest: /etc/yum.repos.d/gh-cli.repo
+  become: yes
 
 - name: Ensure gh is installed
   ansible.builtin.package:
     name: gh
     state: present
+  become: yes
