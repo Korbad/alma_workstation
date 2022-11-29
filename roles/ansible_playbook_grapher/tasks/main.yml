@@ -1,0 +1,4 @@
+---
+- name: Install playbook grapher via pip
+  ansible.builtin.pip:
+    name: ansible-playbook-grapher
