@@ -1,0 +1,7 @@
+---
+- name: Manage directories for github orgs in 'managed_github_orgs' list
+  include_tasks: process_managed_github_org.yml
+  loop: "{{ managed_github_orgs }}"
+  loop_control:
+    loop_var: github_org
+  when: managed_github_orgs is defined

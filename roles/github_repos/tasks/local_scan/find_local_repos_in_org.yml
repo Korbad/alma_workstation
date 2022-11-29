@@ -1,0 +1,13 @@
+---
+- name: Get list of all local git repo directories
+  find:
+    paths: "{{ github_org_path }}"
+    file_type: directory
+  register: github_repos_response
+
+- include_tasks: check_status_of_local_repo.yml
+  vars:
+    github_repo_path: "{{ github_repos.path }}"
+  loop: "{{ repos.files }}"
+  loop_control:
+    loop_var: github_repos_response

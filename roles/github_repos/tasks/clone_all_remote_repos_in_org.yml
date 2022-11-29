@@ -1,0 +1,26 @@
+---
+
+- name: Manage directories for github orgs in 'managed_github_orgs' list
+  include_tasks: process_managed_github_orgs_list.yml
+  include_tasks: clone_all_repos_in_org.yml
+  loop: "{{ managed_github_orgs }}"
+  loop_control:
+    loop_var: github_org
+  when: managed_github_orgs is defined
+
+- name: Get list of repos within an org
+  command:
+    cmd: gh repo list {{ github_org }} --json sshUrl,owner,name --no-archived --limit 999
+  register: gh_org_repo_list
+
+- name: Manage each repo in github org
+  include_tasks: status.yml
+  loop: "{{ gh_org_repo_list.stdout | from_json }}"
+  loop_control:
+    loop_var: github
+  vars:
+    git_url: "{{ github.sshUrl }}"
+    github_org: "{{ github.owner.login }}"
+    github_repo_name: "{{ github.name }}"
+    project_path: "{{ (github_repos_basedir, github_org, github_repo_name) | path_join }}"
+

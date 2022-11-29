@@ -1,0 +1,3 @@
+---
+- name: Scan existing local orgs and repos
+  include_tasks: find_local_orgs.yml

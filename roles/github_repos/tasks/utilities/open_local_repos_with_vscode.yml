@@ -1,0 +1,5 @@
+---
+- name: Open VSCode at local git repo path
+  command: vscode .
+  args:
+    chdir: "{{ github_repo_path }}"

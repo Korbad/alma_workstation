@@ -1,0 +1,9 @@
+- name: purge directory if git status shows up-to-date
+  file:
+    state: absent
+    path: "{{ github_repo_path }}"
+  when:
+  - git_status_after_fetch is success
+  - '"Untracked files" not in git_status_after_fetch.stdout'
+  - '"Changes not staged for commit" not in git_status_after_fetch.stdout'
+  - '"Your branch is up to date with" in git_status_after_fetch.stdout'
