@@ -6,7 +6,7 @@
 
 - name: Update pip modules
   pip:
-    name: "{{ python_modules }}"
+    name: "{{ pip_package_list }}"
     state: present
 
 
