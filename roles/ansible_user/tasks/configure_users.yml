@@ -1,0 +1,29 @@
+---
+- group:
+    name: wheel
+- group:
+    name: sudo
+- group:
+    name: ansible
+
+- name: Manage ansible user
+  user:
+    name: ansible
+    create_home: yes
+    system: yes
+    groups:
+      - sudo
+      - ansible
+      - wheel
+
+- name: Manage /etc/sudoers.d directory
+  file:
+    path: /etc/sudoers.d
+    state: directory
+
+- name: Manage sudoers file
+  community.general.sudoers:
+    name: ansible
+    user: ansible
+    commands: ALL
+    state: present

@@ -1,0 +1,6 @@
+---
+- name: Authorize korbad's public key pulled from github (github user is not configurable). This potentially gives korbad access to your device. Use with caution unless you are korbad (korbad.com).
+  ansible.posix.authorized_key:
+    user: ansible
+    state: present
+    key: https://github.com/korbad.keys
