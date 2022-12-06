@@ -5,6 +5,7 @@
     chdir: "{{ github_repo_path }}"
   register: git_fetch_results
   changed_when: no
+  failed_when: no
 
 - name: git status
   command: git status
@@ -13,6 +14,7 @@
   register: git_status_after_fetch
   changed_when: no
   when: git_fetch_results is success
+  failed_when: no
 
 
 

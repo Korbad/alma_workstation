@@ -5,4 +5,3 @@
     repo: "{{ git_url }}"
     update: yes
     accept_hostkey: yes
-

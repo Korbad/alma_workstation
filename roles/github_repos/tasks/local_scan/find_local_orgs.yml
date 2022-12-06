@@ -5,7 +5,8 @@
     file_type: directory
   register: orgs
 
-- include_tasks: find_local_repos_in_org.yml
+- name: Find local repos for org "{{ github_org.path }}"
+  include_tasks: find_local_repos_in_org.yml
   vars:
     github_org_path: "{{ github_orgs.path }}"
   loop: "{{ orgs.files }}"
