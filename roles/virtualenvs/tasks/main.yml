@@ -1,19 +1,10 @@
 ---
-- name: Upgrade pip
-  pip:
-    name: pip
-    state: latest
-
-- name: Install virtualenv via pip before creating venv
-  pip:
-    name: virtualenv
-    executable: pip3
-
-- name: Create venv
+- include_tasks: install_virtualenv_via_pip.yml
+- include_tasks: install_base_python_versions.yml
+- name: Create venv ({{ virtualenv_name }})
   pip:
     name: "{{ python_modules }}"
     state: present
-    virtualenv: "~/managed_python39_venv"
+    virtualenv: "{{ (managed_virtualenvs_path ,virtualenv_name) | path_join }}"
     virtualenv_site_packages: no
     virtualenv_python: python3.9
-

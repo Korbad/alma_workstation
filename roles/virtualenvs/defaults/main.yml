@@ -1,0 +1,2 @@
+---
+managed_virtualenvs_path: "{{ lookup('env','HOME') }}/managed_virtualenvs"

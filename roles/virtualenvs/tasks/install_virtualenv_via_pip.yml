@@ -1,0 +1,10 @@
+---
+- name: Upgrade pip
+  pip:
+    name: pip
+    state: latest
+
+- name: Install virtualenv via pip before creating venv
+  pip:
+    name: virtualenv
+    executable: pip3
