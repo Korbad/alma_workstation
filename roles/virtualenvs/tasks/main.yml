@@ -2,7 +2,7 @@
 - include_tasks: install_virtualenv_via_pip.yml
 - include_tasks: install_base_python_versions.yml
 - name: Create venv ({{ virtualenv_name }})
-  pip:
+  ansible.builtin.pip:
     name: "{{ python_modules }}"
     state: present
     virtualenv: "{{ (managed_virtualenvs_path ,virtualenv_name) | path_join }}"

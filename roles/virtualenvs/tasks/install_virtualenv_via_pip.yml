@@ -1,10 +1,13 @@
 ---
 - name: Upgrade pip
-  pip:
+  ansible.builtin.pip:
     name: pip
     state: latest
+    executable: pip3
+  become: yes
+
 
 - name: Install virtualenv via pip before creating venv
-  pip:
+  ansible.builtin.pip:
     name: virtualenv
     executable: pip3
