@@ -1,0 +1,2 @@
+---
+- include_tasks: on_disk_credential_file.yml

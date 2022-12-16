@@ -1,0 +1,3 @@
+---
+managed_credential_files_path: "{{ (lookup('env','HOME'), 'managed_credential_files') | path_join }}"
+vault_credential_file_path: "{{ (managed_credential_files_path, 'ansible_vault') | path_join }}"
