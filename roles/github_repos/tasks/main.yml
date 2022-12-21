@@ -1,10 +1,12 @@
 ---
-- name: Scan existing local orgs and repos
-  include_tasks: local_scan/find_local_orgs.yml
-
-- name: Manage local clones of repos in 'managed_github_repos' list
-  include_tasks: process_managed_github_repos_list.yml
+- name: Manage each repo via github org and repo name
+  include_tasks: status.yml
+  loop: "{{ managed_github_repos }}"
+  loop_control:
+    loop_var: github
+  vars:
+    git_url: "{{ github.git_link }}"
+    github_org: "{{ github.github_org }}"
+    github_repo_name: "{{ github.github_repo_name }}"
+    project_path: "{{ (github_repos_basedir, github_org, github_repo_name) | path_join }}"
   when: managed_github_repos is defined
-
-- name: Manage directories for github orgs in 'managed_github_orgs' list
-  include_tasks: process_managed_github_orgs_list.yml

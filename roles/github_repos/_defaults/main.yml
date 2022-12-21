@@ -1,5 +1,0 @@
----
-github_url: github.com
-github_full_git_path: "git://{{ github_url }}/{{ github_org }}/{{ github_repo_name }}.git"
-github_repos_basedir: "{{ lookup('env','HOME')+'/managed_github_repos' }}"
-project_path: "{{ (github_repos_basedir, github_org, github_repo_name) | path_join }}"

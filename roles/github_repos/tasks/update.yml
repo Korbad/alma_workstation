@@ -1,7 +1,7 @@
 ---
-- name: git repo, update for project_path {{ project_path }}
+- name: git repo, clone to project_path {{ project_path }}
   git:
     dest: "{{ project_path }}"
     repo: "{{ git_url }}"
-    update: yes
+    update: no
     accept_hostkey: yes
