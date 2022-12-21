@@ -1,0 +1,14 @@
+---
+- name: Create directory for uptime-kuma
+  file:
+    path: "{{ uptime_kuma_artifact_path }}"
+    state: directory
+
+- name: Provision docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ uptime_kuma_artifact_path }}/docker-compose.yml"
+
+- name: Ensure container is running
+  community.docker.docker_compose:
+    project_src: "{{ uptime_kuma_artifact_path }}"

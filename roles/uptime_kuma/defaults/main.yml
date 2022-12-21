@@ -1,0 +1,4 @@
+---
+uptime_kuma_artifact_path: "{{ (lookup('env','HOME'), 'uptime-kuma') | path_join }}"
+uptime_kuma_host_port: 3001
+uptime_kuma_container_port: 3001
