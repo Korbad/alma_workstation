@@ -1,0 +1,5 @@
+---
+- name: Ensure npm package is installed
+  ansible.builtin.package:
+    name: npm
+  become: yes
