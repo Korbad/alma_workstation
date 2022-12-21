@@ -1,0 +1,10 @@
+---
+- name: Create bash script which activates venv
+  template:
+    src: venv_exec.j2
+    dest: "{{ venv_path }}/exec"
+    mode: u+xrw,o-xrw,g-xrw
+
+- name: Execute command
+  command:
+    cmd: "{{ venv_path }}/exec {{ command }}"
