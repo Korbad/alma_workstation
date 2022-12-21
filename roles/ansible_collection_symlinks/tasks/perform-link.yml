@@ -1,0 +1,17 @@
+---
+- name: Ensure collection namespace directory exists
+  ansible.builtin.file:
+    state: directory
+    path: "{{ (collections_path, 'ansible_collections', collection_namespace) | path_join }}"
+  vars:
+    collections_path: "{{ (lookup('env','HOME'), '.ansible', 'collections') | path_join }}"
+
+- ansible.builtin.file:
+    path: "{{ collection_path }}"
+    state: link
+    src: "{{ source_path }}"
+    force: yes
+  vars:
+    collections_path: "{{ (lookup('env','HOME'), '.ansible', 'collections') | path_join }}"
+    collection_path: "{{ (collections_path, 'ansible_collections', collection_namespace, collection_name) | path_join }}"
+    

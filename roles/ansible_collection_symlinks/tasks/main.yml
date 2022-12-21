@@ -1,0 +1,12 @@
+---
+- name: Ensure symlink exists is source is github
+  include_tasks: perform-link.yml
+  vars:
+    source_path: "{{ (lookup('env','HOME'), 'managed_github_repos', github_org, github_repo) | path_join }}"
+  when: github_org is defined
+
+- name: Ensure symlink exists if source is bitbucket
+  include_tasks: perform-link.yml
+  vars:
+    source_path: "{{ (lookup('env','HOME'), 'managed_bitbucket_repos', bitbucket_org, bitbucket_repo) | path_join }}"
+  when: bitbucket_org is defined
