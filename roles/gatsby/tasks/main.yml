@@ -1,0 +1,8 @@
+---
+- name: Ensure Gatsby NPM is installed
+  community.general.npm:
+    name: gatsby
+    path: "{{ managed_npm_path }}"
+
+- name: create a new Gatsby site using the garden theme starter
+  command: gatsby new my-digital-garden https://github.com/mathieudutour/gatsby-starter-digital-garden
