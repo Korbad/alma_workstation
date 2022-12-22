@@ -5,8 +5,9 @@
   register: gh_org_repo_list
 
 - name: Manage each repo in github org
-  include_role: korbad.alma_workstation.github_repos
-  tasks_from: status.yml
+  include_role:
+    name: korbad.alma_workstation.github_repos
+    tasks_from: status.yml
   loop: "{{ gh_org_repo_list.stdout | from_json }}"
   loop_control:
     loop_var: github
